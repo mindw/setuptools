@@ -13,3 +13,7 @@ setuptools.egg-info
 *.swp
 *~
 .hg*
+
+.idea/
+
+.cache/v/cache/lastfailed
