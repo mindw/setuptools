@@ -6,10 +6,10 @@ import platform
 import itertools
 import distutils.errors
 
-from setuptools.extern.six.moves import filterfalse
+from pkg_resources.extern.six.moves import filterfalse
 
 if platform.system() == 'Windows':
-    from setuptools.extern.six.moves import winreg
+    from pkg_resources.extern.six.moves import winreg
     safe_env = os.environ
 else:
     """

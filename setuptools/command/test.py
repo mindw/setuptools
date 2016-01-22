@@ -3,8 +3,8 @@ import contextlib
 from distutils.errors import DistutilsOptionError
 from unittest import TestLoader
 
-from setuptools.extern import six
-from setuptools.extern.six.moves import map
+from pkg_resources.extern import six
+from pkg_resources.extern.six.moves import map
 
 from pkg_resources import (resource_listdir, resource_exists, normalize_path,
                            working_set, _namespace_packages,

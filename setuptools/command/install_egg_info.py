@@ -1,7 +1,7 @@
 from distutils import log, dir_util
 import os
 
-from setuptools.extern.six.moves import map
+from pkg_resources.extern.six.moves import map
 
 from setuptools import Command
 from setuptools.archive_util import unpack_archive

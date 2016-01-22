@@ -9,8 +9,8 @@ import unicodedata
 import contextlib
 import io
 
-from setuptools.extern import six
-from setuptools.extern.six.moves import map
+from pkg_resources.extern import six
+from pkg_resources.extern.six.moves import map
 
 import pytest
 

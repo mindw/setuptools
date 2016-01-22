@@ -15,8 +15,8 @@ import warnings
 import time
 import collections
 
-from setuptools.extern import six
-from setuptools.extern.six.moves import map
+from pkg_resources.extern import six
+from pkg_resources.extern.six.moves import map
 
 from setuptools import Command
 from setuptools.command.sdist import sdist

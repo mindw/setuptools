@@ -4,7 +4,7 @@ import marshal
 from distutils.version import StrictVersion
 from imp import PKG_DIRECTORY, PY_COMPILED, PY_SOURCE, PY_FROZEN
 
-from setuptools.extern import six
+from pkg_resources.extern import six
 
 __all__ = [
     'Require', 'find_module', 'get_module_constant', 'extract_constant'

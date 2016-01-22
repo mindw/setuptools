@@ -182,7 +182,7 @@ setup_params = dict(
         'setuptools[ssl]',
         'pytest-flake8',
         'pytest>=2.8',
-    ] + (['mock'] if sys.version_info[:2] < (3, 3) else []),
+    ] + (['mock'] if sys.version_info < (3, 3) else []),
     setup_requires=[
     ] + pytest_runner + wheel,
 )

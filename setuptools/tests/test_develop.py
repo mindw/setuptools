@@ -5,7 +5,7 @@ import site
 import sys
 import io
 
-from setuptools.extern import six
+from pkg_resources.extern import six
 
 import pytest
 

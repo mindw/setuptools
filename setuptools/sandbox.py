@@ -8,8 +8,8 @@ import re
 import contextlib
 import pickle
 
-from setuptools.extern import six
-from setuptools.extern.six.moves import builtins, map
+from pkg_resources.extern import six
+from pkg_resources.extern.six.moves import builtins, map
 
 import pkg_resources
 

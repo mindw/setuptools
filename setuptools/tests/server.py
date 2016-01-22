@@ -4,7 +4,7 @@
 import time
 import threading
 
-from setuptools.extern.six.moves import BaseHTTPServer, SimpleHTTPServer
+from pkg_resources.extern.six.moves import BaseHTTPServer, SimpleHTTPServer
 
 
 class IndexServer(BaseHTTPServer.HTTPServer):

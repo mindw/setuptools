@@ -5,7 +5,7 @@ import distutils.core
 import distutils.errors
 import distutils.extension
 
-from setuptools.extern.six.moves import map
+from pkg_resources.extern.six.moves import map
 
 from .dist import _get_unpatched
 from . import msvc

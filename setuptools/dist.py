@@ -1,5 +1,3 @@
-__all__ = ['Distribution']
-
 import re
 import os
 import sys
@@ -14,13 +12,16 @@ from distutils.errors import (DistutilsOptionError, DistutilsPlatformError,
     DistutilsSetupError)
 from distutils.util import rfc822_escape
 
-from setuptools.extern import six
-from setuptools.extern.six.moves import map
+from pkg_resources.extern import six
+from pkg_resources.extern.six.moves import map
 from pkg_resources.extern import packaging
 
 from setuptools.depends import Require
 from setuptools import windows_support
 import pkg_resources
+
+
+__all__ = ['Distribution']
 
 
 def _get_unpatched(cls):

@@ -6,7 +6,7 @@ import sys
 import io
 import contextlib
 
-from setuptools.extern import six
+from pkg_resources.extern import six
 
 from setuptools.utils import cs_path_exists
 

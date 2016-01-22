@@ -8,7 +8,7 @@ from distutils.errors import DistutilsSetupError
 from distutils.core import Extension
 from distutils.version import LooseVersion
 
-from setuptools.extern import six
+from pkg_resources.extern import six
 import pytest
 
 import setuptools.dist
