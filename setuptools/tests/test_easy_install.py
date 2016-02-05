@@ -32,6 +32,7 @@ from setuptools.command import easy_install as easy_install_pkg
 from setuptools.dist import Distribution
 from pkg_resources import normalize_path, working_set
 from pkg_resources import Distribution as PRDistribution
+from pkg_resources import EntryPoint
 import setuptools.tests.server
 import pkg_resources
 
@@ -44,7 +45,9 @@ class FakeDist(object):
     def get_entry_map(self, group):
         if group != 'console_scripts':
             return {}
-        return {'name': 'ep'}
+        s = "name = module:attrs"
+        ep = EntryPoint.parse(s)
+        return {'name': ep}
 
     def as_requirement(self):
         return 'spec'
@@ -69,17 +72,14 @@ class TestEasyInstallTest:
     def test_get_script_args(self):
         header = ei.CommandSpec.best().from_environment().as_header()
         expected = header + DALS("""
-            # EASY-INSTALL-ENTRY-SCRIPT: 'spec','console_scripts','name'
-            __requires__ = 'spec'
-            import re
+            # -*- coding: utf-8 -*-
             import sys
-            from pkg_resources import load_entry_point
+            import re
+            from module import attrs
 
             if __name__ == '__main__':
-                sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
-                sys.exit(
-                    load_entry_point('spec', 'console_scripts', 'name')()
-                )
+                sys.argv[0] = re.sub(r'-script\.pyw?$', '.exe', sys.argv[0])
+                sys.exit(attrs())
             """)
         dist = FakeDist()
 

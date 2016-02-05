@@ -2009,17 +2009,14 @@ class ScriptWriter(object):
     """
 
     template = textwrap.dedent("""
-        # EASY-INSTALL-ENTRY-SCRIPT: %(spec)r,%(group)r,%(name)r
-        __requires__ = %(spec)r
-        import re
+        # -*- coding: utf-8 -*-
         import sys
-        from pkg_resources import load_entry_point
+        import re
+        from %(module)s import %(import_name)s
 
         if __name__ == '__main__':
-            sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
-            sys.exit(
-                load_entry_point(%(spec)r, %(group)r, %(name)r)()
-            )
+            sys.argv[0] = re.sub(r'-script\.pyw?$', '.exe', sys.argv[0])
+            sys.exit(%(func)s())
     """).lstrip()
 
     command_spec_class = CommandSpec
@@ -2050,12 +2047,17 @@ class ScriptWriter(object):
         """
         if header is None:
             header = cls.get_header()
-        spec = str(dist.as_requirement())
         for type_ in 'console', 'gui':
             group = type_ + '_scripts'
             for name, ep in dist.get_entry_map(group).items():
+                func = ep.attrs[0]
+                script_args = {
+                    "module": ep.module_name,
+                    "import_name": func.split('.')[0],
+                    "func": func,
+                }
                 cls._ensure_safe_name(name)
-                script_text = cls.template % locals()
+                script_text = cls.template % script_args
                 args = cls._get_script_args(type_, name, header, script_text)
                 for res in args:
                     yield res
