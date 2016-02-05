@@ -1353,7 +1353,7 @@ def get_default_cache():
         # best option, should be locale-safe
         (('APPDATA',), None),
         (('USERPROFILE',), app_data),
-        (('HOMEDRIVE','HOMEPATH'), app_data),
+        (('HOMEDRIVE', 'HOMEPATH'), app_data),
         (('HOMEPATH',), app_data),
         (('HOME',), None),
         # 95/98/ME
@@ -1410,7 +1410,7 @@ def to_filename(name):
 
     Any '-' characters are currently replaced with '_'.
     """
-    return name.replace('-','_')
+    return name.replace('-', '_')
 
 
 def invalid_marker(text):
@@ -2027,13 +2027,13 @@ def _handle_ns(packageName, path_item):
     """Ensure that named package includes a subpath of path_item (if needed)"""
 
     importer = get_importer(path_item)
-    if importer is None:
+    if not importer:
         return None
     loader = importer.find_module(packageName)
-    if loader is None:
+    if not loader:
         return None
     module = sys.modules.get(packageName)
-    if module is None:
+    if not module:
         module = sys.modules[packageName] = types.ModuleType(packageName)
         module.__path__ = []
         _set_parent_ns(packageName)
@@ -2041,7 +2041,7 @@ def _handle_ns(packageName, path_item):
         raise TypeError("Not a package:", packageName)
     handler = _find_adapter(_namespace_handlers, importer)
     subpath = handler(importer, path_item, packageName, module)
-    if subpath is not None:
+    if subpath:
         path = module.__path__
         path.append(subpath)
         loader.load_module(packageName)
@@ -2117,7 +2117,7 @@ def file_ns_handler(importer, path_item, packageName, module):
     subpath = os.path.join(path_item, packageName.split('.')[-1])
     normalized = _normalize_cached(subpath)
     for item in module.__path__:
-        if _normalize_cached(item)==normalized:
+        if _normalize_cached(item) == normalized:
             break
     else:
         # Only return the path if it's not already there
@@ -2718,7 +2718,6 @@ class EggInfoDistribution(Distribution):
 class DistInfoDistribution(Distribution):
     """Wrap an actual or potential sys.path entry w/metadata, .dist-info style"""
     PKG_INFO = 'METADATA'
-    EQEQ = re.compile(r"([\(,])\s*(\d.*?)\s*([,\)])")
 
     @property
     def _parsed_pkg_info(self):
@@ -2748,9 +2747,9 @@ class DistInfoDistribution(Distribution):
             reqs.extend(parse_requirements(req))
 
         def reqs_for_extra(extra):
-            for req in reqs:
-                if not req.marker or req.marker.evaluate({'extra': extra}):
-                    yield req
+            for _req in reqs:
+                if not _req.marker or _req.marker.evaluate({'extra': extra}):
+                    yield _req
 
         common = frozenset(reqs_for_extra(None))
         dm[None].extend(common)
