@@ -2070,13 +2070,13 @@ def _handle_ns(packageName, path_item):
     """Ensure that named package includes a subpath of path_item (if needed)"""
 
     importer = get_importer(path_item)
-    if importer is None:
+    if not importer:
         return None
     loader = importer.find_module(packageName)
-    if loader is None:
+    if not loader:
         return None
     module = sys.modules.get(packageName)
-    if module is None:
+    if not module:
         module = sys.modules[packageName] = types.ModuleType(packageName)
         module.__path__ = []
         _set_parent_ns(packageName)
@@ -2084,7 +2084,7 @@ def _handle_ns(packageName, path_item):
         raise TypeError("Not a package:", packageName)
     handler = _find_adapter(_namespace_handlers, importer)
     subpath = handler(importer, path_item, packageName, module)
-    if subpath is not None:
+    if subpath:
         path = module.__path__
         path.append(subpath)
         loader.load_module(packageName)
@@ -2778,7 +2778,6 @@ class EggInfoDistribution(Distribution):
 class DistInfoDistribution(Distribution):
     """Wrap an actual or potential sys.path entry w/metadata, .dist-info style"""
     PKG_INFO = 'METADATA'
-    EQEQ = re.compile(r"([\(,])\s*(\d.*?)\s*([,\)])")
 
     @property
     def _parsed_pkg_info(self):
@@ -2808,9 +2807,9 @@ class DistInfoDistribution(Distribution):
             reqs.extend(parse_requirements(req))
 
         def reqs_for_extra(extra):
-            for req in reqs:
-                if not req.marker or req.marker.evaluate({'extra': extra}):
-                    yield req
+            for _req in reqs:
+                if not _req.marker or _req.marker.evaluate({'extra': extra}):
+                    yield _req
 
         common = frozenset(reqs_for_extra(None))
         dm[None].extend(common)
