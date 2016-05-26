@@ -86,9 +86,14 @@ def pypi_link(pkg_filename):
     return '/'.join(parts)
 
 
+with open('setuptools/version.py') as fp:
+    _locals = {}
+    exec(fp.read(), None, _locals)
+    __version__ = _locals['__version__']
+
 setup_params = dict(
     name="setuptools",
-    version="25.2.0",
+    version=__version__,
     description="Easily download, build, install, upgrade, and uninstall "
         "Python packages",
     author="Python Packaging Authority",
