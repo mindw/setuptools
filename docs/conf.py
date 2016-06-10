@@ -21,9 +21,6 @@
 # Allow Sphinx to find the setup command that is imported below, as referenced above.
 import os
 import sys
-sys.path.append(os.path.abspath('..'))
-
-import setup as setup_script
 
 # -- General configuration -----------------------------------------------------
 
@@ -42,16 +39,16 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Setuptools'
-copyright = '2009-2014, The fellowship of the packaging'
+copyright = '2009-2016, The fellowship of the packaging'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-version = setup_script.setup_params['version']
+from setuptools import __version__ as version
 # The full version, including alpha/beta/rc tags.
-release = setup_script.setup_params['version']
+release = version
 
 # List of directories, relative to source directory, that shouldn't be searched
 # for source files.
@@ -104,7 +101,7 @@ latex_documents = [
 ]
 
 link_files = {
-    '../CHANGES.rst': dict(
+    'CHANGES.rst': dict(
         using=dict(
             BB='https://bitbucket.org',
             GH='https://github.com',
