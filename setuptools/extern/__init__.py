@@ -1,4 +1,4 @@
-from pkg_resources.extern import VendorImporter
+from pkg_resources.extern import vendored
 
-names = 'six',
-VendorImporter(__name__, names, 'pkg_resources._vendor').install()
+vendored(__name__, 'six', 'pkg_resources._vendor')
+vendored(__name__, 'six.moves', 'pkg_resources._vendor')
